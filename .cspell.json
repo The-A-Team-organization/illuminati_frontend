@@ -1,12 +1,5 @@
 {
   "version": "0.2",
   "language": "en",
-  "words": [
-    "ASGI",
-    "asgi",
-    "gevxo",
-    "lsbae",
-    "qwie",
-    "runserver"
-  ]
+  "words": ["ASGI", "asgi", "gevxo", "lsbae", "qwie", "runserver"]
 }
