@@ -1,2 +1,3 @@
-# illuminati_front_django
+# README
+
 This repo created by Terraform
