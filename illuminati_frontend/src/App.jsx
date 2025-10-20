@@ -1,35 +1,61 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route, Link, Navigate } from 'react-router-dom'
+import EntryPassword from './pages/EntryPassword'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import ProtectedHome from './pages/ProtectedHome'
+import ProtectedEntry from './components/ProtectedEntry'
+import ProtectedAuth from './components/ProtectedAuth'
+import { isEntryVerified } from './auth'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
+    <div>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <Link to="/entry"></Link>
+        {isEntryVerified() && (
+          <>
+            {' '}
+            <Link to="/login"></Link>
+            {' '}
+            <Link to="/register"></Link>
+          </>
+        )}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+
+      <Routes>
+        <Route path="/" element={<Navigate to="/entry" replace />} />
+        <Route path="/entry" element={<EntryPassword />} />
+
+        <Route
+          path="/login"
+          element={
+            <ProtectedEntry>
+              <Login />
+            </ProtectedEntry>
+          }
+        />
+
+        <Route
+          path="/register"
+          element={
+            <ProtectedEntry>
+              <Register />
+            </ProtectedEntry>
+          }
+        />
+
+        <Route
+          path="/protected-home"
+          element={
+            <ProtectedAuth>
+              <ProtectedHome />
+            </ProtectedAuth>
+          }
+        />
+      </Routes>
+
+    </div>
   )
 }
 
-export default App
