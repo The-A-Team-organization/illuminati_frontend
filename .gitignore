@@ -1,3 +1,6 @@
+node_modules/
+dist/
+.env
 *.pyc
 __pycache__/
 db.sqlite3
