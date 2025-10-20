@@ -1,15 +1,13 @@
-FROM python:3.13
+FROM node:20-alpine
 
 WORKDIR /app
 
-RUN pip install --upgrade pip 
+COPY illuminati_frontend/package*.json ./
 
-COPY requirements.txt  /app/
+RUN npm install
 
-RUN pip install --no-cache-dir -r requirements.txt
+COPY illuminati_frontend ./
 
-COPY . /app/
+EXPOSE 5173
 
-EXPOSE 80
-
-CMD ["python", "manage.py", "runserver", "0.0.0.0:80"]
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
