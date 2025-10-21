@@ -1,12 +1,12 @@
-import { useState } from 'react'
-import { Routes, Route, Link, Navigate } from 'react-router-dom'
-import EntryPassword from './pages/EntryPassword'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import ProtectedHome from './pages/ProtectedHome'
-import ProtectedEntry from './components/ProtectedEntry'
-import ProtectedAuth from './components/ProtectedAuth'
-import { isEntryVerified } from './auth'
+import { useState } from "react";
+import { Routes, Route, Link, Navigate } from "react-router-dom";
+import EntryPassword from "./pages/EntryPassword";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ProtectedHome from "./pages/ProtectedHome";
+import ProtectedEntry from "./components/ProtectedEntry";
+import ProtectedAuth from "./components/ProtectedAuth";
+import { isEntryVerified } from "./auth";
 
 export default function App() {
   return (
@@ -15,10 +15,8 @@ export default function App() {
         <Link to="/entry"></Link>
         {isEntryVerified() && (
           <>
-            {' '}
-            <Link to="/login"></Link>
-            {' '}
-            <Link to="/register"></Link>
+            {" "}
+            <Link to="/login"></Link> <Link to="/register"></Link>
           </>
         )}
       </div>
@@ -54,8 +52,6 @@ export default function App() {
           }
         />
       </Routes>
-
     </div>
-  )
+  );
 }
-

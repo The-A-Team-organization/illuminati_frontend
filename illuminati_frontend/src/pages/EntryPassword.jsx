@@ -1,32 +1,31 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { setEntryVerified } from '../auth'
-import { verifyEntryPassword } from '../api'
-
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { setEntryVerified } from "../auth";
+import { verifyEntryPassword } from "../api";
 
 export default function EntryPassword() {
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const navigate = useNavigate()
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
-    e.preventDefault()
-    setError(null)
-    setLoading(true)
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
 
     try {
-      const data = await verifyEntryPassword(password)
+      const data = await verifyEntryPassword(password);
       if (data && data.ok) {
-        setEntryVerified(true)
-        navigate('/login')
+        setEntryVerified(true);
+        navigate("/login");
       } else {
-        setError(data?.detail || 'Wrong password')
+        setError(data?.detail || "Wrong password");
       }
     } catch (err) {
-      setError(err?.message || 'Network error')
+      setError(err?.message || "Network error");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
@@ -44,13 +43,11 @@ export default function EntryPassword() {
             minLength={1}
           />
           <button type="submit" disabled={loading} className="btn">
-            {loading ? 'Verifying...' : 'Submit'}
+            {loading ? "Verifying..." : "Submit"}
           </button>
           {error && <div className="error">{error}</div>}
         </form>
       </div>
     </div>
-  )
+  );
 }
-
-

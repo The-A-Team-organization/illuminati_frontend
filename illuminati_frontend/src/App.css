@@ -18,7 +18,7 @@ body,
 
 body {
   margin: 0;
-  font-family: 'Cinzel', serif, system-ui;
+  font-family: "Cinzel", serif, system-ui;
   background: linear-gradient(180deg, #000000 0%, var(--bg) 100%);
   color: #f5f5f5;
   display: flex;
@@ -48,7 +48,7 @@ body {
 .card h2 {
   margin: 0 0 20px 0;
   color: var(--accent);
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
   letter-spacing: 2px;
   text-transform: uppercase;
 }

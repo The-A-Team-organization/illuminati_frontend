@@ -1,36 +1,33 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { login } from '../api'
-import { setAuthToken } from '../auth'
-
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../api";
+import { setAuthToken } from "../auth";
 
 export default function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const navigate = useNavigate()
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
-    e.preventDefault()
-    setError(null)
-    setLoading(true)
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
     try {
-      const data = await login(email, password)
+      const data = await login(email, password);
       if (data && data.token) {
-        setAuthToken(data.token)
-        navigate('/protected-home')
+        setAuthToken(data.token);
+        navigate("/protected-home");
       } else {
-        setError(data?.detail || 'Login failed')
+        setError(data?.detail || "Login failed");
       }
     } catch (err) {
-      setError(err?.response?.data?.detail || err.message || 'Network error')
+      setError(err?.response?.data?.detail || err.message || "Network error");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
-
 
   return (
     <div className="page center">
@@ -52,19 +49,17 @@ export default function Login() {
             required
           />
 
-
           <button type="submit" disabled={loading} className="btn">
-            {loading ? 'Signing in...' : 'Sign in'}
+            {loading ? "Signing in..." : "Sign in"}
           </button>
-
 
           {error && <div className="error">{error}</div>}
 
-
-          <div className="muted">Don't have an account? <Link to="/register">Register</Link></div>
+          <div className="muted">
+            Don't have an account? <Link to="/register">Register</Link>
+          </div>
         </form>
       </div>
     </div>
-  )
+  );
 }
-

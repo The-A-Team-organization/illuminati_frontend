@@ -1,32 +1,32 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { register } from '../api'
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { register } from "../api";
 
 export default function Register() {
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const [success, setSuccess] = useState(null)
-  const navigate = useNavigate()
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
-    e.preventDefault()
-    setError(null)
-    setLoading(true)
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
     try {
-      const data = await register(username, email, password)
+      const data = await register(username, email, password);
       if (data && (data.ok || data.id)) {
-        setSuccess('Registration successful. You can now log in.')
-        setTimeout(() => navigate('/login'), 1200)
+        setSuccess("Registration successful. You can now log in.");
+        setTimeout(() => navigate("/login"), 1200);
       } else {
-        setError(data?.detail || 'Registration failed')
+        setError(data?.detail || "Registration failed");
       }
     } catch (err) {
-      setError(err?.response?.data?.detail || err.message || 'Network error')
+      setError(err?.response?.data?.detail || err.message || "Network error");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
@@ -59,7 +59,7 @@ export default function Register() {
           />
 
           <button type="submit" disabled={loading} className="btn">
-            {loading ? 'Registering...' : 'Register'}
+            {loading ? "Registering..." : "Register"}
           </button>
 
           {error && <div className="error">{error}</div>}
@@ -67,7 +67,5 @@ export default function Register() {
         </form>
       </div>
     </div>
-  )
+  );
 }
-
-
