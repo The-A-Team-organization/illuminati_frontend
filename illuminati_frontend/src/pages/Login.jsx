@@ -23,7 +23,9 @@ export default function Login() {
         setError(data.notification);
       }
     } catch (err) {
-      setError(err?.response?.data?.notification || err.message || "Network error");
+      setError(
+        err?.response?.data?.notification || err.message || "Network error",
+      );
     } finally {
       setLoading(false);
     }

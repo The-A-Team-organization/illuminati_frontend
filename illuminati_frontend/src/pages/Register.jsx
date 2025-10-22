@@ -21,10 +21,10 @@ export default function Register() {
         setSuccess("Registration successful. You can now log in.");
         setTimeout(() => navigate("/login"), 1200);
       } else {
-        setError(data?.notifictaion || "Registration failed");
+        setError(data?.notification || "Registration failed");
       }
     } catch (err) {
-      setError(err?.response?.data?.notifictaion || "Network error");
+      setError(err?.response?.data?.notification || "Network error");
     } finally {
       setLoading(false);
     }

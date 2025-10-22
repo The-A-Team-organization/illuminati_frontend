@@ -18,7 +18,11 @@ export async function login(email, password) {
 }
 
 export async function register(username, email, password) {
-  const res = await client.post("/api/authentific/register/", { username, email, password });
+  const res = await client.post("/api/authentific/register/", {
+    username,
+    email,
+    password,
+  });
   return res.data;
 }
 
