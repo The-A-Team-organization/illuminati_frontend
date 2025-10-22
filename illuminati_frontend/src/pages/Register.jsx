@@ -24,7 +24,7 @@ export default function Register() {
         setError(data?.notifictaion || "Registration failed");
       }
     } catch (err) {
-      setError(err?.response?.data?.notifictaion || err.message || "Network error");
+      setError(err?.response?.data?.notifictaion || "Network error");
     } finally {
       setLoading(false);
     }
