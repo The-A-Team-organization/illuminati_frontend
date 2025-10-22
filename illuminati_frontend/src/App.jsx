@@ -1,0 +1,57 @@
+import { useState } from "react";
+import { Routes, Route, Link, Navigate } from "react-router-dom";
+import EntryPassword from "./pages/EntryPassword";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ProtectedHome from "./pages/ProtectedHome";
+import ProtectedEntry from "./components/ProtectedEntry";
+import ProtectedAuth from "./components/ProtectedAuth";
+import { isEntryVerified } from "./auth";
+
+export default function App() {
+  return (
+    <div>
+      <div>
+        <Link to="/entry"></Link>
+        {isEntryVerified() && (
+          <>
+            {" "}
+            <Link to="/login"></Link> <Link to="/register"></Link>
+          </>
+        )}
+      </div>
+
+      <Routes>
+        <Route path="/" element={<Navigate to="/entry" replace />} />
+        <Route path="/entry" element={<EntryPassword />} />
+
+        <Route
+          path="/login"
+          element={
+            <ProtectedEntry>
+              <Login />
+            </ProtectedEntry>
+          }
+        />
+
+        <Route
+          path="/register"
+          element={
+            <ProtectedEntry>
+              <Register />
+            </ProtectedEntry>
+          }
+        />
+
+        <Route
+          path="/protected-home"
+          element={
+            <ProtectedAuth>
+              <ProtectedHome />
+            </ProtectedAuth>
+          }
+        />
+      </Routes>
+    </div>
+  );
+}
