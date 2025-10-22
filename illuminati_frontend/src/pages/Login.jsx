@@ -16,14 +16,14 @@ export default function Login() {
     setLoading(true);
     try {
       const data = await login(email, password);
-      if (data && data.token) {
+      if (data.status === "OK") {
         setAuthToken(data.token);
         navigate("/protected-home");
       } else {
-        setError(data?.detail || "Login failed");
+        setError(data.notification);
       }
     } catch (err) {
-      setError(err?.response?.data?.detail || err.message || "Network error");
+      setError(err?.response?.data?.notification || err.message || "Network error");
     } finally {
       setLoading(false);
     }

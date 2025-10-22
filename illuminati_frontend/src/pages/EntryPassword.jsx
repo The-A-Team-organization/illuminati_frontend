@@ -16,11 +16,11 @@ export default function EntryPassword() {
 
     try {
       const data = await verifyEntryPassword(password);
-      if (data && data.ok) {
+      if (data.status === "OK") {
         setEntryVerified(true);
         navigate("/login");
       } else {
-        setError(data?.detail || "Wrong password");
+        setError(data.notification);
       }
     } catch (err) {
       setError(err?.message || "Network error");

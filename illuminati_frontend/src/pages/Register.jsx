@@ -17,14 +17,14 @@ export default function Register() {
     setLoading(true);
     try {
       const data = await register(username, email, password);
-      if (data && (data.ok || data.id)) {
+      if (data.status === "OK") {
         setSuccess("Registration successful. You can now log in.");
         setTimeout(() => navigate("/login"), 1200);
       } else {
-        setError(data?.detail || "Registration failed");
+        setError(data?.notifictaion || "Registration failed");
       }
     } catch (err) {
-      setError(err?.response?.data?.detail || err.message || "Network error");
+      setError(err?.response?.data?.notifictaion || err.message || "Network error");
     } finally {
       setLoading(false);
     }
