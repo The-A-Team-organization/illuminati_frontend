@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+    options {
+        skipStagesAfterUnstable()
+    }
+    stages {        
+        stage('Build') { 
+            steps { 
+                script{
+                 app = docker.build("frontend-dev")
+                }
+            }
+        }
+        stage('Test'){
+            steps {
+                 echo 'Empty'
+            }
+        }
+        stage('Logging into AWS ECR') {
+            steps {
+                script {
+                    sh """aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin ${FRONTEND_ECR_LINK}"""
+                }  
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script{
+                    docker.withRegistry("https://${FRONTEND_ECR_LINK}") {
+                        app.push("${env.BUILD_NUMBER}")
+                        app.push("latest")
+                    }
+                }
+            }
+        }
+    }
+}
