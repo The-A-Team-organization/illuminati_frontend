@@ -1,14 +1,32 @@
 import React from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import Navbar from "../components/Navbar";
 
 export default function ProtectedHome() {
   return (
-    <div className="page center">
-      <div className="card">
-        <h2>Protected Home</h2>
-        <p>
-          You reached a protected page — backend-protected content should go
-          here.
-        </p>
+    <div className="page-home">
+      <Navbar />
+
+      <div className="map-card">
+        <div className="map-wrapper">
+          <MapContainer
+            center={[49.8397, 24.0297]}
+            zoom={13}
+            scrollWheelZoom={true}
+            className="map"
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={[49.8397, 24.0297]}>
+              <Popup>
+                <strong>Lviv</strong>
+              </Popup>
+            </Marker>
+          </MapContainer>
+        </div>
       </div>
     </div>
   );
