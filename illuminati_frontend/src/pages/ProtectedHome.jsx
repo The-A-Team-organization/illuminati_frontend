@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 
 export default function ProtectedHome() {
   return (
-    <div className="page">
+    <div className="page-home">
       <Navbar />
 
       <div className="map-card">
