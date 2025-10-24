@@ -13,7 +13,7 @@ export default function ProtectedHome() {
           <MapContainer
             center={[49.8397, 24.0297]}
             zoom={13}
-            scrollWheelZoom={false}
+            scrollWheelZoom={true}
             className="map">
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
