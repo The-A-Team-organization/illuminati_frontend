@@ -8,8 +8,8 @@ export default function Navbar() {
   const navigate = useNavigate();
   const userRoles = getUserRoles();
 
-  const visibleItems = navItems.filter(item =>
-    item.roles.some(role => userRoles.includes(role))
+  const visibleItems = navItems.filter((item) =>
+    item.roles.some((role) => userRoles.includes(role)),
   );
 
   function handleLogout() {
@@ -25,8 +25,10 @@ export default function Navbar() {
       </div>
 
       <div className="nav-center">
-        {visibleItems.map(item => (
-          <a key={item.name} href={item.href}>{item.name}</a>
+        {visibleItems.map((item) => (
+          <a key={item.name} href={item.href}>
+            {item.name}
+          </a>
         ))}
       </div>
 
@@ -38,5 +40,3 @@ export default function Navbar() {
     </nav>
   );
 }
-
-
