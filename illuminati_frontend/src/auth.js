@@ -16,3 +16,14 @@ export function setAuthToken(token) {
 export function getAuthToken() {
   return sessionStorage.getItem(TOKEN_KEY);
 }
+
+export function getUserRoles() {
+  const token = sessionStorage.getItem("auth_token");
+  if (!token) return [];
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    return [payload.role];
+  } catch {
+    return [];
+  }
+}

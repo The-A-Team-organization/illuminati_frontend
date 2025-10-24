@@ -1,9 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/masons_logo.jpg";
+import { navItems } from "../config/navbar";
+import { getUserRoles } from "../utils/auth";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const userRoles = getUserRoles();
+
+  const visibleItems = navItems.filter(item =>
+    item.roles.some(role => userRoles.includes(role))
+  );
 
   function handleLogout() {
     sessionStorage.clear();
@@ -18,10 +25,9 @@ export default function Navbar() {
       </div>
 
       <div className="nav-center">
-        <a href="#">Report</a>
-        <a href="#">Vote</a>
-        <a href="#">Invite</a>
-        <a href="#">Broadcast Emails</a>
+        {visibleItems.map(item => (
+          <a key={item.name} href={item.href}>{item.name}</a>
+        ))}
       </div>
 
       <div className="nav-right">
