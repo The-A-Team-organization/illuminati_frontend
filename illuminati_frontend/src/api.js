@@ -26,4 +26,9 @@ export async function register(username, email, password) {
   return res.data;
 }
 
+export async function getAllRecords() {
+  const res = await client.get("/api/records/all");
+  return res.data;
+}
+
 export default client;
