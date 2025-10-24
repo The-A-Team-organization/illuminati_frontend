@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/masons_logo.jpg";
-import { navItems } from "../config/navbar";
-import { getUserRoles } from "../utils/auth";
+import logo from "../assets/masons_logo.svg";
+import { navItems } from "../configs/navbar";
+import { getUserRoles } from "../auth";
 
 export default function Navbar() {
   const navigate = useNavigate();
