@@ -6,9 +6,9 @@ export default defineConfig({
   plugins: [react()],
   test: {
     coverage: {
-      provider: 'v8',
-      reporter: ['text', 'json-summary', 'json', 'lcov'],
+      provider: "v8",
+      reporter: ["text", "json-summary", "json", "lcov"],
       reportOnFailure: true,
-    }
-  }
+    },
+  },
 });
