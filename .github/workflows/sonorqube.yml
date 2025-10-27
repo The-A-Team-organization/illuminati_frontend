@@ -13,12 +13,19 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: coverage setup
+        run: |
+          cd illuminati_frontend
+          npm install
+          npx vitest --coverage.enabled true
+
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
         continue-on-error: false
         with:
           args: >-
             -Dsonar.projectKey=illuminati_frontend
+            -Dsonar.javascript.lcov.reportPaths=./illuminati_frontend/coverage/lcov.info
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
