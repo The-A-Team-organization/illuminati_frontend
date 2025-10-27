@@ -31,4 +31,16 @@ export async function getAllRecords() {
   return res.data;
 }
 
+export async function downloadRecordsBackup() {
+  const response = await client.get("/api/snapshot/download/", {
+    responseType: "blob",
+  });
+  return response.data;
+}
+
+export async function restoreRecordsBackup(data) {
+  const response = await client.post("/api/snapshot/upload/", data);
+  return response.data;
+}
+
 export default client;

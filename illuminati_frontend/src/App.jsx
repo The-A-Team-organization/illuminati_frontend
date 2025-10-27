@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import ProtectedHome from "./pages/ProtectedHome";
 import ProtectedEntry from "./components/ProtectedEntry";
 import ProtectedAuth from "./components/ProtectedAuth";
+import RecordsBackupRestore from "./pages/RecordsBackupRestore";
 import { isEntryVerified } from "./auth";
 
 export default function App() {
@@ -48,6 +49,15 @@ export default function App() {
           element={
             <ProtectedAuth>
               <ProtectedHome />
+            </ProtectedAuth>
+          }
+        />
+
+        <Route
+          path="/records"
+          element={
+            <ProtectedAuth>
+              <RecordsBackupRestore />
             </ProtectedAuth>
           }
         />
