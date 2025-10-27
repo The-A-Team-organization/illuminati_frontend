@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import Navbar from "../components/Navbar";
 import { getUserRoles } from "../auth";
@@ -19,8 +25,8 @@ export default function ProtectedHome() {
   const [showForm, setShowForm] = useState(false);
 
   const userRoles = getUserRoles();
-  const canCreate = ["GoldMason", "SilverMason", "Architect"].some(
-    (role) => userRoles.includes(role)
+  const canCreate = ["GoldMason", "SilverMason", "Architect"].some((role) =>
+    userRoles.includes(role),
   );
 
   useEffect(() => {
