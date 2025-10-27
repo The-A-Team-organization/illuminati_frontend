@@ -31,4 +31,13 @@ export async function getAllRecords() {
   return res.data;
 }
 
+export async function createRecord(data) {
+  const res = await client.post("/api/records/create", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return res.data;
+}
+
 export default client;
