@@ -19,7 +19,7 @@ beforeEach(() => {
   };
 
   vi.spyOn(global, "atob").mockImplementation((str) =>
-    Buffer.from(str, "base64").toString("binary")
+    Buffer.from(str, "base64").toString("binary"),
   );
 });
 
@@ -63,4 +63,3 @@ describe("auth.js utilities", () => {
     expect(getUserRoles()).toEqual([]);
   });
 });
-
