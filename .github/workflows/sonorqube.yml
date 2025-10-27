@@ -15,6 +15,7 @@ jobs:
       
       - name: coverage setup
         run: |
+          cd illuminati_frontend
           npm install
           npx vitest --coverage.enabled true
 
