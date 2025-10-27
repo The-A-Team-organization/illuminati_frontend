@@ -12,13 +12,15 @@ const TOKEN_KEY = "auth_token";
 
 beforeEach(() => {
   const store = {};
-  global.sessionStorage = {
+  globalThis.sessionStorage = {
     setItem: (key, val) => (store[key] = val),
     getItem: (key) => store[key],
-    clear: () => Object.keys(store).forEach((k) => delete store[k]),
+    clear: () => {
+      for (const k of Object.keys(store)) delete store[k];
+    },
   };
 
-  vi.spyOn(global, "atob").mockImplementation((str) =>
+  vi.spyOn(globalThis, "atob").mockImplementation((str) =>
     Buffer.from(str, "base64").toString("binary"),
   );
 });
