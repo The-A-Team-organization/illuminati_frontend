@@ -14,13 +14,9 @@ jobs:
           fetch-depth: 0
       
       - name: coverage setup
-        run: npm install
-
-      - name: Install dependencies
-        run: yarn
-
-      - name: Test and coverage
-        run: yarn vitest run --coverage 
+        run: |
+          npm install
+          npx vitest --coverage.enabled true
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
