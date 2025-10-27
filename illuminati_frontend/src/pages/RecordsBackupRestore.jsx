@@ -8,14 +8,14 @@ export default function RecordsBackupRestore() {
   const handleDownload = async () => {
     try {
       const blob = await downloadRecordsBackup();
-      const url = window.URL.createObjectURL(new Blob([blob]));
+      const url = globalThis.URL.createObjectURL(new Blob([blob]));
       const a = document.createElement("a");
       a.href = url;
       a.download = "records_backup.json";
       document.body.appendChild(a);
       a.click();
       a.remove();
-      window.URL.revokeObjectURL(url);
+      globalThis.URL.revokeObjectURL(url);
       setMessage("Backup downloaded successfully");
     } catch (error) {
       setMessage(`Download error: ${error.message}`);
