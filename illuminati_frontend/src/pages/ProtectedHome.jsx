@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMapEvents,
-} from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import Navbar from "../components/Navbar";
 import { getUserRoles } from "../auth";
-import { getAllRecords, createRecord } from "../api";
+import { getAllRecords, createRecord, getRecordById } from "../api";
 
 export default function ProtectedHome() {
   const [records, setRecords] = useState([]);
@@ -23,6 +17,8 @@ export default function ProtectedHome() {
     img_file: null,
   });
   const [showForm, setShowForm] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null);
+  const [showDetailPanel, setShowDetailPanel] = useState(false);
 
   const userRoles = getUserRoles();
   const canCreate = ["GoldMason", "SilverMason", "Architect"].some((role) =>
@@ -84,11 +80,28 @@ export default function ProtectedHome() {
     return null;
   }
 
+  async function handleMarkerClick(id) {
+    try {
+      const res = await getRecordById(id);
+      if (res.status === "OK") {
+        setSelectedRecord(res.data);
+        setShowDetailPanel(true);
+      } else {
+        alert(res.notification || "Failed to fetch record details");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error fetching record details");
+    }
+  }
+
   return (
     <div className="page-home">
       <Navbar />
       <div className="map-card">
-        <div className={`map-wrapper ${showForm ? "dimmed" : ""}`}>
+        <div
+          className={`map-wrapper ${showForm || showDetailPanel ? "dimmed" : ""}`}
+        >
           <MapContainer
             center={[49.8397, 24.0297]}
             zoom={13}
@@ -100,15 +113,78 @@ export default function ProtectedHome() {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <MapClickHandler />
-
             {records.map((r) => (
-              <Marker key={r.id} position={[r.x, r.y]}>
-                <Popup>
-                  <strong>{r.type || "Unknown"}</strong>
-                </Popup>
-              </Marker>
+              <Marker
+                key={r.id}
+                position={[r.x, r.y]}
+                eventHandlers={{
+                  click: () => handleMarkerClick(r.id),
+                }}
+              />
             ))}
           </MapContainer>
+
+          <div
+            className={`record-panel details-panel ${
+              showDetailPanel ? "show" : ""
+            }`}
+            aria-hidden={!showDetailPanel}
+          >
+            <h2>Record Details</h2>
+
+            {selectedRecord ? (
+              <>
+                <div className="record-details">
+                  <div className="record-field">
+                    <span className="label">Name:</span>
+                    <span className="value">{selectedRecord.name}</span>
+                  </div>
+
+                  <div className="record-field">
+                    <span className="label">Coordinates:</span>
+                    <span className="value">
+                      {selectedRecord.x}, {selectedRecord.y}
+                    </span>
+                  </div>
+
+                  <div className="record-field">
+                    <span className="label">Type:</span>
+                    <span className="value">{selectedRecord.type}</span>
+                  </div>
+
+                  <div className="record-field">
+                    <span className="label">Description:</span>
+                    <p className="value">{selectedRecord.description}</p>
+                  </div>
+
+                  {selectedRecord.img_path && (
+                    <div className="record-image">
+                      <img
+                        src={selectedRecord.img_path}
+                        alt={selectedRecord.name}
+                        className="details-image"
+                      />
+                    </div>
+                  )}
+
+                  <div className="record-field">
+                    <span className="label">Additional info:</span>
+                    <p className="value">{selectedRecord.additional_info}</p>
+                  </div>
+                </div>
+
+                <button
+                  className="btn btn-secondary close-btn"
+                  onClick={() => setShowDetailPanel(false)}
+                >
+                  Close
+                </button>
+              </>
+            ) : (
+              <p>Loading details...</p>
+            )}
+          </div>
+
           <div className={`record-panel ${showForm ? "show" : ""}`}>
             <h2>Create Record</h2>
             <form className="form" onSubmit={handleSubmit}>
