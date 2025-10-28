@@ -3,7 +3,6 @@ import {
   MapContainer,
   TileLayer,
   Marker,
-  Popup,
   useMapEvents,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -131,9 +130,8 @@ export default function ProtectedHome() {
           </MapContainer>
 
           <div
-            className={`record-panel details-panel ${
-              showDetailPanel ? "show" : ""
-            }`}
+            className={`record-panel details-panel ${showDetailPanel ? "show" : ""
+              }`}
             aria-hidden={!showDetailPanel}
           >
             <h2>Record Details</h2>
