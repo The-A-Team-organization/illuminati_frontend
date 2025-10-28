@@ -44,7 +44,7 @@ describe("ProtectedHome component", () => {
 
   test("fetches and displays records", async () => {
     const mockRecords = [
-      { id: 1, x: 49.8, y: 24.0, name: "Record 1" },
+      { id: 1, x: 49.8, y: 24.1, name: "Record 1" },
       { id: 2, x: 49.9, y: 24.1, name: "Record 2" },
     ];
     api.getAllRecords.mockResolvedValueOnce({ status: "OK", data: mockRecords });
@@ -64,7 +64,7 @@ describe("ProtectedHome component", () => {
   });
 
   test("clicking marker shows record details", async () => {
-    const mockRecord = { id: 1, x: 49.8, y: 24.0, name: "Record 1", type: "UFO", description: "desc", additional_info: "info" };
+    const mockRecord = { id: 1, x: 49.8, y: 24.1, name: "Record 1", type: "UFO", description: "desc", additional_info: "info" };
     api.getAllRecords.mockResolvedValueOnce({ status: "OK", data: [mockRecord] });
     api.getRecordById.mockResolvedValueOnce({ status: "OK", data: mockRecord });
 
@@ -81,7 +81,7 @@ describe("ProtectedHome component", () => {
   });
 
   test("fills and submits create record form", async () => {
-    const mockRecord = { id: 1, x: 49.8, y: 24.0, name: "Record 1" };
+    const mockRecord = { id: 1, x: 49.8, y: 24.1, name: "Record 1" };
     api.createRecord.mockResolvedValueOnce({ status: "OK", data: mockRecord });
 
     render(<ProtectedHome />);
@@ -89,7 +89,7 @@ describe("ProtectedHome component", () => {
 
     fireEvent.change(screen.getByPlaceholderText("Name"), { target: { value: "Record 1" } });
     fireEvent.change(screen.getByPlaceholderText("Latitude (x)"), { target: { value: 49.8 } });
-    fireEvent.change(screen.getByPlaceholderText("Longitude (y)"), { target: { value: 24.0 } });
+    fireEvent.change(screen.getByPlaceholderText("Longitude (y)"), { target: { value: 24.1 } });
     fireEvent.change(screen.getByPlaceholderText("Type"), { target: { value: "UFO" } });
     fireEvent.change(screen.getByPlaceholderText("Description"), { target: { value: "desc" } });
     fireEvent.change(screen.getByPlaceholderText("Additional info"), { target: { value: "info" } });
