@@ -40,4 +40,9 @@ export async function createRecord(data) {
   return res.data;
 }
 
+export async function getRecordById(id) {
+  const res = await client.get(`/api/records/${id}`);
+  return res.data;
+}
+
 export default client;
