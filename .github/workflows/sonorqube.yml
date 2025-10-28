@@ -1,34 +1,32 @@
 name: sonorqube
 
-on: 
+on:
   workflow_dispatch:
   push:
 
 jobs:
-
   trigger:
     name: Build and analyze
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/main'
     steps:
-    - name: Trigger another workflow
-      uses: benc-uk/workflow-dispatch@v1
-      with:
-        workflow: sonorqube.yml
-        token: ${{ secrets.GH_TOKEN }}
-        repo: The-A-Team-organization/illuminati_frontend
-        ref: main
-    - name: Wait 20s
-      uses: GuillaumeFalourd/wait-sleep-action@v1
-      with:
-        time: '20' # for 60 seconds
+      - name: Trigger another workflow
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: sonorqube.yml
+          token: ${{ secrets.GH_TOKEN }}
+          repo: The-A-Team-organization/illuminati_frontend
+          ref: main
+      - name: Wait 20s
+        uses: GuillaumeFalourd/wait-sleep-action@v1
+        with:
+          time: "20" # for 60 seconds
 
   build:
     name: Build and analyze
     runs-on: ubuntu-latest
 
     steps:
-     
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
