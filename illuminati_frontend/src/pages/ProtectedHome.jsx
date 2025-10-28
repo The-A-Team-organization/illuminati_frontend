@@ -125,8 +125,9 @@ export default function ProtectedHome() {
           </MapContainer>
 
           <div
-            className={`record-panel details-panel ${showDetailPanel ? "show" : ""
-              }`}
+            className={`record-panel details-panel ${
+              showDetailPanel ? "show" : ""
+            }`}
             aria-hidden={!showDetailPanel}
           >
             <h2>Record Details</h2>
