@@ -24,10 +24,10 @@ jobs:
         continue-on-error: false
         with:
           args: >-
-            -Dsonar.projectKey=illuminati_frontend 
+            -Dsonar.projectKey=illuminati_frontend_new
             -Dsonar.coverage.exclusions=**/*test*
             -Dsonar.javascript.lcov.reportPaths=./illuminati_frontend/coverage/lcov.info
-            -Dsonar.branch.name=TAT-47-Implement-snapshot-download-upload-endpoint-in-frontend
+
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
