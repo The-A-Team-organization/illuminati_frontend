@@ -105,7 +105,9 @@ export default function ProtectedHome() {
     <div className="page-home">
       <Navbar />
       <div className="map-card">
-        <div className={`map-wrapper ${showForm || showDetailPanel ? "dimmed" : ""}`}>
+        <div
+          className={`map-wrapper ${showForm || showDetailPanel ? "dimmed" : ""}`}
+        >
           <MapContainer
             center={[49.8397, 24.0297]}
             zoom={13}
@@ -126,12 +128,12 @@ export default function ProtectedHome() {
                 }}
               />
             ))}
-
           </MapContainer>
 
           <div
-            className={`record-panel details-panel ${showDetailPanel ? "show" : ""
-              }`}
+            className={`record-panel details-panel ${
+              showDetailPanel ? "show" : ""
+            }`}
             aria-hidden={!showDetailPanel}
           >
             <h2>Record Details</h2>
@@ -188,7 +190,6 @@ export default function ProtectedHome() {
               <p>Loading details...</p>
             )}
           </div>
-
 
           <div className={`record-panel ${showForm ? "show" : ""}`}>
             <h2>Create Record</h2>
