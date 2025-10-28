@@ -20,7 +20,7 @@ jobs:
       - name: Wait 20s
         uses: GuillaumeFalourd/wait-sleep-action@v1
         with:
-          time: "20" # for 60 seconds
+          time: "20"
 
   build:
     name: Build and analyze
