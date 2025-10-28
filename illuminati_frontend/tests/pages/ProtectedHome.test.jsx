@@ -7,21 +7,21 @@ import { describe, test, expect, vi } from "vitest";
 import * as api from "../../src/api";
 
 vi.mock("react-leaflet", () => {
-  const MapContainer = ({ children }) => <div data-testid="map">{children}</div>;
+  const MapContainer = ({ children }) => (
+    <div data-testid="map">{children}</div>
+  );
   MapContainer.propTypes = { children: PropTypes.node };
 
   const TileLayer = () => <div>TileLayer</div>;
 
   const Marker = ({ eventHandlers }) => (
-    <div
+    <button
       data-testid="marker"
-      role="button"
-      tabIndex={0}
+      type="button"
       onClick={() => eventHandlers?.click?.()}
-      onKeyDown={(e) => e.key === "Enter" && eventHandlers?.click?.()}
     >
       Marker
-    </div>
+    </button>
   );
   Marker.propTypes = { eventHandlers: PropTypes.object };
 
@@ -56,7 +56,10 @@ describe("ProtectedHome component", () => {
       { id: 1, x: 49.8, y: 24.1, name: "Record 1" },
       { id: 2, x: 49.9, y: 24.1, name: "Record 2" },
     ];
-    api.getAllRecords.mockResolvedValueOnce({ status: "OK", data: mockRecords });
+    api.getAllRecords.mockResolvedValueOnce({
+      status: "OK",
+      data: mockRecords,
+    });
 
     render(<ProtectedHome />);
     await waitFor(() => expect(api.getAllRecords).toHaveBeenCalled());
@@ -68,13 +71,24 @@ describe("ProtectedHome component", () => {
 
     fireEvent.click(map);
     await waitFor(() =>
-      expect(screen.getByText("Create Record")).toBeInTheDocument()
+      expect(screen.getByText("Create Record")).toBeInTheDocument(),
     );
   });
 
   test("clicking marker shows record details", async () => {
-    const mockRecord = { id: 1, x: 49.8, y: 24.1, name: "Record 1", type: "UFO", description: "desc", additional_info: "info" };
-    api.getAllRecords.mockResolvedValueOnce({ status: "OK", data: [mockRecord] });
+    const mockRecord = {
+      id: 1,
+      x: 49.8,
+      y: 24.1,
+      name: "Record 1",
+      type: "UFO",
+      description: "desc",
+      additional_info: "info",
+    };
+    api.getAllRecords.mockResolvedValueOnce({
+      status: "OK",
+      data: [mockRecord],
+    });
     api.getRecordById.mockResolvedValueOnce({ status: "OK", data: mockRecord });
 
     render(<ProtectedHome />);
@@ -84,7 +98,7 @@ describe("ProtectedHome component", () => {
     fireEvent.click(marker);
 
     await waitFor(() =>
-      expect(screen.getByText("Record Details")).toBeInTheDocument()
+      expect(screen.getByText("Record Details")).toBeInTheDocument(),
     );
     expect(screen.getByText("Record 1")).toBeInTheDocument();
   });
@@ -96,20 +110,33 @@ describe("ProtectedHome component", () => {
     render(<ProtectedHome />);
     fireEvent.click(await screen.findByTestId("map"));
 
-    fireEvent.change(screen.getByPlaceholderText("Name"), { target: { value: "Record 1" } });
-    fireEvent.change(screen.getByPlaceholderText("Latitude (x)"), { target: { value: 49.8 } });
-    fireEvent.change(screen.getByPlaceholderText("Longitude (y)"), { target: { value: 24.1 } });
-    fireEvent.change(screen.getByPlaceholderText("Type"), { target: { value: "UFO" } });
-    fireEvent.change(screen.getByPlaceholderText("Description"), { target: { value: "desc" } });
-    fireEvent.change(screen.getByPlaceholderText("Additional info"), { target: { value: "info" } });
+    fireEvent.change(screen.getByPlaceholderText("Name"), {
+      target: { value: "Record 1" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Latitude (x)"), {
+      target: { value: 49.8 },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Longitude (y)"), {
+      target: { value: 24.1 },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Type"), {
+      target: { value: "UFO" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Description"), {
+      target: { value: "desc" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Additional info"), {
+      target: { value: "info" },
+    });
 
     fireEvent.submit(screen.getByRole("button", { name: /Save/i }));
     await waitFor(() => expect(api.createRecord).toHaveBeenCalled());
   });
 
-
   test("handles API error on load", async () => {
-    const consoleError = vi.spyOn(console, "error").mockImplementation(() => { });
+    const consoleError = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
     api.getAllRecords.mockRejectedValueOnce(new Error("Network error"));
 
     render(<ProtectedHome />);
@@ -117,4 +144,3 @@ describe("ProtectedHome component", () => {
     consoleError.mockRestore();
   });
 });
-
