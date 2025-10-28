@@ -24,7 +24,8 @@ jobs:
         continue-on-error: false
         with:
           args: >-
-            -Dsonar.projectKey=illuminati_frontend
+            -Dsonar.projectKey=illuminati_frontend 
+            -Dsonar.coverage.exclusions=*test*
             -Dsonar.javascript.lcov.reportPaths=./illuminati_frontend/coverage/lcov.info
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
