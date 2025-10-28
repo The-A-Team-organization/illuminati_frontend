@@ -31,6 +31,6 @@ test("downloads backup and shows success message", async () => {
   fireEvent.click(screen.getByText(/Download Backup/i));
 
   await waitFor(() =>
-    expect(screen.getByText(/Backup downloaded successfully/i)).toBeTruthy()
+    expect(screen.getByText(/Backup downloaded successfully/i)).toBeTruthy(),
   );
 });
