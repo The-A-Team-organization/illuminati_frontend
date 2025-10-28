@@ -12,5 +12,4 @@ describe("App '/' redirect", () => {
 
     expect(screen.getByText("Enter Today's Password")).toBeTruthy();
   });
-  cd;
 });
