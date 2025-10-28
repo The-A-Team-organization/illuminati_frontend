@@ -1,25 +1,34 @@
 import "@testing-library/jest-dom";
+import PropTypes from "prop-types";
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import ProtectedHome from "../../src/pages/ProtectedHome";
 import { describe, test, expect, vi } from "vitest";
 import * as api from "../../src/api";
 
-vi.mock("react-leaflet", () => ({
-  MapContainer: ({ children }) => <div data-testid="map">{children}</div>,
-  TileLayer: () => <div>TileLayer</div>,
-  Marker: ({ eventHandlers }) => {
-    return (
-      <div
-        data-testid="marker"
-        onClick={() => eventHandlers?.click?.()}
-      >
-        Marker
-      </div>
-    );
-  },
-  useMapEvents: () => ({}),
-}));
+vi.mock("react-leaflet", () => {
+  const MapContainer = ({ children }) => <div data-testid="map">{children}</div>;
+  MapContainer.propTypes = { children: PropTypes.node };
+
+  const TileLayer = () => <div>TileLayer</div>;
+
+  const Marker = ({ eventHandlers }) => (
+    <div
+      data-testid="marker"
+      role="button"
+      tabIndex={0}
+      onClick={() => eventHandlers?.click?.()}
+      onKeyDown={(e) => e.key === "Enter" && eventHandlers?.click?.()}
+    >
+      Marker
+    </div>
+  );
+  Marker.propTypes = { eventHandlers: PropTypes.object };
+
+  const useMapEvents = () => ({});
+
+  return { MapContainer, TileLayer, Marker, useMapEvents };
+});
 
 vi.mock("../../src/components/Navbar", () => ({
   default: () => <div data-testid="navbar">Mock Navbar</div>,
