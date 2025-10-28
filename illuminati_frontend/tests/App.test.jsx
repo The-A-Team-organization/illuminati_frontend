@@ -7,9 +7,8 @@ describe("App '/' redirect", () => {
     render(
       <MemoryRouter initialEntries={["/"]}>
         <App />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
-
     expect(screen.getByText("Enter Today's Password")).toBeTruthy();
   });
 });
