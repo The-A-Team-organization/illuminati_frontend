@@ -68,4 +68,18 @@ export async function restoreRecordsBackup(data) {
   return response.data;
 }
 
+export async function getVotes(token) {
+  const res = await client.get("/api/votes/getVotes/", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data;
+}
+
+export async function sendVote(token, vote) {
+  const res = await client.post("/api/votes/sendVote/", vote, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data;
+}
+
 export default client;
