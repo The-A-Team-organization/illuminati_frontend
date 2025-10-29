@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getAuthToken } from "./auth";
 
 const API_BASE = "http://localhost:8000";
 
@@ -42,6 +43,12 @@ export async function createRecord(data) {
 
 export async function getRecordById(id) {
   const res = await client.get(`/api/records/${id}`);
+  return res.data;
+}
+
+export async function eraseAllRecords() {
+  const token = getAuthToken()
+  const res = await client.post("/api/records/erase", {}, { headers: { Authorization: `Bearer ${token}` } });
   return res.data;
 }
 
