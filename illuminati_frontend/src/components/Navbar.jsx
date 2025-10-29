@@ -55,7 +55,8 @@ export default function Navbar() {
         ))}
       </div>
 
-      <div className="nav-right">
+      <div className="nav-right" style={{ display: "flex", gap: "10px" }}>
+        {canErase && (<button onClick={handleErase} className="btn btn-danger">We are compromised</button>)}
         <button onClick={handleLogout} className="nav-btn">
           Logout
         </button>
