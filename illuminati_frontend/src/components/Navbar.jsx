@@ -44,7 +44,7 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="nav-left">
         <img src={logo} alt="Logo" className="nav-logo" />
-        <span className="nav-title">MyApp</span>
+        <span className="nav-title">Illuminati</span>
       </div>
 
       <div className="nav-center">
