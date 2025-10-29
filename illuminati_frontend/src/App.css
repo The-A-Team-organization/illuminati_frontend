@@ -3,7 +3,7 @@
   --card: #2c2c2c;
   --muted: #a0a0a0;
   --accent: #d4af37;
-  --danger: #ef4444;
+  --danger: #8b0000;
 }
 
 * {
@@ -142,10 +142,18 @@ body {
 .btn-danger {
   background: var(--danger);
   color: #fff;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
 .btn-danger:hover {
-  background: #c53030;
+  background: #b30000;
 }
 
 .btn-success {
