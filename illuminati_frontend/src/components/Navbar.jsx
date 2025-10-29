@@ -7,7 +7,7 @@ import { eraseAllRecords } from "../api";
 
 async function handleErase() {
   const confirmed = globalThis.confirm(
-    "This will permanently delete all records. Are you absolutely sure?"
+    "This will permanently delete all records. Are you absolutely sure?",
   );
   if (!confirmed) return;
 
@@ -33,8 +33,9 @@ export default function Navbar() {
     item.roles.some((role) => userRoles.includes(role)),
   );
 
-  const canErase = ["GoldMason", "Architect"].some((role) => userRoles.includes(role));
-
+  const canErase = ["GoldMason", "Architect"].some((role) =>
+    userRoles.includes(role),
+  );
 
   function handleLogout() {
     sessionStorage.clear();
@@ -57,7 +58,11 @@ export default function Navbar() {
       </div>
 
       <div className="nav-right" style={{ display: "flex", gap: "10px" }}>
-        {canErase && (<button onClick={handleErase} className="btn btn-danger">We are compromised</button>)}
+        {canErase && (
+          <button onClick={handleErase} className="btn btn-danger">
+            We are compromised
+          </button>
+        )}
         <button onClick={handleLogout} className="nav-btn">
           Logout
         </button>

@@ -47,8 +47,12 @@ export async function getRecordById(id) {
 }
 
 export async function eraseAllRecords() {
-  const token = getAuthToken()
-  const res = await client.post("/api/records/erase", {}, { headers: { Authorization: `Bearer ${token}` } });
+  const token = getAuthToken();
+  const res = await client.post(
+    "/api/records/erase",
+    {},
+    { headers: { Authorization: `Bearer ${token}` } },
+  );
   return res.data;
 }
 
