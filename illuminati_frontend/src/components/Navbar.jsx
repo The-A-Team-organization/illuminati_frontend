@@ -5,6 +5,26 @@ import { navItems } from "../configs/navbar";
 import { getUserRoles } from "../auth";
 import { eraseAllRecords } from "../api";
 
+async function handleErase() {
+  const confirmed = globalThis.confirm(
+    "This will permanently delete all records. Are you absolutely sure?"
+  );
+  if (!confirmed) return;
+
+  try {
+    const res = await eraseAllRecords();
+    if (res.status === "OK") {
+      alert("All records erased.");
+      globalThis.location.reload();
+    } else {
+      alert(res.notification || "Erase failed.");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Error contacting server.");
+  }
+}
+
 export default function Navbar() {
   const navigate = useNavigate();
   const userRoles = getUserRoles();
@@ -15,25 +35,6 @@ export default function Navbar() {
 
   const canErase = ["GoldMason", "Architect"].some((role) => userRoles.includes(role));
 
-  async function handleErase() {
-    const confirmed = window.confirm(
-      "This will permanently delete all records. Are you absolutely sure?"
-    );
-    if (!confirmed) return;
-
-    try {
-      const res = await eraseAllRecords();
-      if (res.status === "OK") {
-        alert("All records erased.");
-        window.location.reload();
-      } else {
-        alert(res.notification || "Erase failed.");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Error contacting server.");
-    }
-  }
 
   function handleLogout() {
     sessionStorage.clear();
