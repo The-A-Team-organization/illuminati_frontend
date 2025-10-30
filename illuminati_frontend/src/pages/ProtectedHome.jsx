@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import Navbar from "../components/Navbar";
 import { getUserRoles } from "../auth";
-import { getAllRecords, createRecord, getRecordById } from "../api";
+import { getAllRecords, createRecord, getRecordById, likeRecord, unlikeRecord } from "../api";
 
 export default function ProtectedHome() {
   const [records, setRecords] = useState([]);
@@ -125,9 +125,8 @@ export default function ProtectedHome() {
           </MapContainer>
 
           <div
-            className={`record-panel details-panel ${
-              showDetailPanel ? "show" : ""
-            }`}
+            className={`record-panel details-panel ${showDetailPanel ? "show" : ""
+              }`}
             aria-hidden={!showDetailPanel}
           >
             <h2>Record Details</h2>
@@ -171,6 +170,51 @@ export default function ProtectedHome() {
                     <span className="label">Additional info:</span>
                     <p className="value">{selectedRecord.additional_info}</p>
                   </div>
+                  <div className="record-field likes">
+                    <span className="label">Likes:</span>
+                    <span className="value" style={{ marginRight: 8 }}>
+                      {selectedRecord.likes_count ?? 0}
+                    </span>
+
+                    <button
+                      className={`btn like-btn ${selectedRecord.liked_by_user ? "liked" : ""}`}
+                      onClick={async () => {
+                        try {
+                          if (selectedRecord.liked_by_user) {
+                            const res = await unlikeRecord(selectedRecord.id);
+                            if (res.status === "OK") {
+                              setSelectedRecord(prev => ({
+                                ...prev,
+                                liked_by_user: false,
+                                likes_count: res.data.likes_count,
+                              }));
+                              setRecords(prev => prev.map(r => r.id === selectedRecord.id ? { ...r, likes_count: res.data.likes_count } : r));
+                            } else {
+                              alert(res.notification || "Failed to unlike");
+                            }
+                          } else {
+                            const res = await likeRecord(selectedRecord.id);
+                            if (res.status === "OK") {
+                              setSelectedRecord(prev => ({
+                                ...prev,
+                                liked_by_user: true,
+                                likes_count: res.data.likes_count,
+                              }));
+                              setRecords(prev => prev.map(r => r.id === selectedRecord.id ? { ...r, likes_count: res.data.likes_count } : r));
+                            } else {
+                              alert(res.notification || "Failed to like");
+                            }
+                          }
+                        } catch (err) {
+                          console.error(err);
+                          alert("Network error while updating like");
+                        }
+                      }}
+                    >
+                      {selectedRecord.liked_by_user ? "Liked" : "Like"}
+                    </button>
+                  </div>
+
                 </div>
 
                 <button
