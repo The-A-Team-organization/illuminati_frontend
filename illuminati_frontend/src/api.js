@@ -53,7 +53,7 @@ export async function likeRecord(recordId) {
   const res = await client.post(
     `/api/records/${recordId}/like/`,
     {},
-    { headers: { Authorization: `Bearer ${token}` } }
+    { headers: { Authorization: `Bearer ${token}` } },
   );
   return res.data;
 }
@@ -63,11 +63,10 @@ export async function unlikeRecord(recordId) {
   const res = await client.post(
     `/api/records/${recordId}/unlike/`,
     {},
-    { headers: { Authorization: `Bearer ${token}` } }
+    { headers: { Authorization: `Bearer ${token}` } },
   );
   return res.data;
 }
-
 
 export async function eraseAllRecords() {
   const token = getAuthToken();
