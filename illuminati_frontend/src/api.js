@@ -42,9 +42,32 @@ export async function createRecord(data) {
 }
 
 export async function getRecordById(id) {
-  const res = await client.get(`/api/records/${id}`);
+  const token = getAuthToken();
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+  const res = await client.get(`/api/records/${id}`, { headers });
   return res.data;
 }
+
+export async function likeRecord(recordId) {
+  const token = getAuthToken();
+  const res = await client.post(
+    `/api/records/${recordId}/like/`,
+    {},
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return res.data;
+}
+
+export async function unlikeRecord(recordId) {
+  const token = getAuthToken();
+  const res = await client.post(
+    `/api/records/${recordId}/unlike/`,
+    {},
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return res.data;
+}
+
 
 export async function eraseAllRecords() {
   const token = getAuthToken();
