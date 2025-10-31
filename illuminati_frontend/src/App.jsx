@@ -9,6 +9,7 @@ import ProtectedAuth from "./components/ProtectedAuth";
 import RecordsBackupRestore from "./pages/RecordsBackupRestore";
 import { isEntryVerified } from "./auth";
 import Vote from "./pages/Vote";
+import Invite from "./pages/Invite";
 
 export default function App() {
   return (
@@ -53,6 +54,16 @@ export default function App() {
             </ProtectedAuth>
           }
         />
+
+        <Route
+          path="/invite"
+          element={
+            <ProtectedAuth>
+              <Invite />
+            </ProtectedAuth>
+          }
+        />
+
         <Route
           path="/vote"
           element={
