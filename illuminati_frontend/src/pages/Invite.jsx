@@ -19,7 +19,7 @@ export default function Invite() {
 
       setStatus("success");
       setMessage(
-        "If this person can be invited, they’ll receive an email shortly."
+        "If this person can be invited, they’ll receive an email shortly.",
       );
       setEmail("");
     } catch (err) {
@@ -28,12 +28,12 @@ export default function Invite() {
       if (statusCode === 409) {
         setStatus("success");
         setMessage(
-          "If this person can be invited, they’ll receive an email shortly."
+          "If this person can be invited, they’ll receive an email shortly.",
         );
       } else {
         setStatus("error");
         setMessage(
-          "Invitation could not be processed at this time. Please try again later."
+          "Invitation could not be processed at this time. Please try again later.",
         );
       }
     }
@@ -63,13 +63,24 @@ export default function Invite() {
         </form>
 
         {status === "success" && (
-          <p className="invite-message" style={{ color: "var(--accent)", marginTop: "10px" }}> {message} </p>
+          <p
+            className="invite-message"
+            style={{ color: "var(--accent)", marginTop: "10px" }}
+          >
+            {" "}
+            {message}{" "}
+          </p>
         )}
         {status === "error" && (
-          <p className="invite-error" style={{ color: "var(--danger)", marginTop: "10px" }}> {message} </p>
+          <p
+            className="invite-error"
+            style={{ color: "var(--danger)", marginTop: "10px" }}
+          >
+            {" "}
+            {message}{" "}
+          </p>
         )}
       </div>
     </div>
   );
 }
-
