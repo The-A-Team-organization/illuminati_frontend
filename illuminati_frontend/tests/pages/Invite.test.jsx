@@ -43,7 +43,7 @@ describe("Invite Page Unit Tests", () => {
     fireEvent.change(input, { target: { value: "test@example.com" } });
     expect(button.disabled).toBe(false);
 
-    api.sendInvite.mockImplementation(() => new Promise(() => { }));
+    api.sendInvite.mockImplementation(() => new Promise(() => {}));
     fireEvent.click(button);
     expect(button.disabled).toBe(true);
 
@@ -61,9 +61,9 @@ describe("Invite Page Unit Tests", () => {
     await waitFor(() =>
       expect(
         screen.getByText(
-          /If this person can be invited, they’ll receive an email shortly./i
-        )
-      ).toBeTruthy()
+          /If this person can be invited, they’ll receive an email shortly./i,
+        ),
+      ).toBeTruthy(),
     );
   });
 
@@ -78,9 +78,9 @@ describe("Invite Page Unit Tests", () => {
     await waitFor(() =>
       expect(
         screen.getByText(
-          /If this person can be invited, they’ll receive an email shortly./i
-        )
-      ).toBeTruthy()
+          /If this person can be invited, they’ll receive an email shortly./i,
+        ),
+      ).toBeTruthy(),
     );
   });
 
@@ -95,10 +95,9 @@ describe("Invite Page Unit Tests", () => {
     await waitFor(() =>
       expect(
         screen.getByText(
-          /Invitation could not be processed at this time. Please try again later./i
-        )
-      ).toBeTruthy()
+          /Invitation could not be processed at this time. Please try again later./i,
+        ),
+      ).toBeTruthy(),
     );
   });
 });
-
