@@ -53,6 +53,16 @@ export default function App() {
             </ProtectedAuth>
           }
         />
+
+        <Route
+          path="/hall_of_fame"
+          element={
+            <ProtectedAuth>
+              <HallOfFame />
+            </ProtectedAuth>
+          }
+        />
+
         <Route
           path="/vote"
           element={
