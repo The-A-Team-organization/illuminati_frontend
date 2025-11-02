@@ -9,6 +9,7 @@ import ProtectedAuth from "./components/ProtectedAuth";
 import RecordsBackupRestore from "./pages/RecordsBackupRestore";
 import { isEntryVerified } from "./auth";
 import Vote from "./pages/Vote";
+import HallOfFame from "./pages/HallOfFame.jsx";
 
 export default function App() {
   return (
