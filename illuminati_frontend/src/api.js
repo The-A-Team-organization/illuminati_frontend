@@ -34,9 +34,7 @@ export async function getAllRecords() {
 
 export async function createRecord(data) {
   const res = await client.post("/api/records/create", data, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
+    headers: { "Content-Type": "multipart/form-data" },
   });
   return res.data;
 }
@@ -99,6 +97,40 @@ export async function getVotes(token) {
 
 export async function sendVote(token, vote) {
   const res = await client.post("/api/votes/sendVote/", vote, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data;
+}
+
+export async function checkPromotePermission() {
+  const token = getAuthToken();
+  const res = await client.get("/api/votes/hasPermission/", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data;
+}
+
+export async function checkBanPermission() {
+  const token = getAuthToken();
+  const res = await client.get("/api/votes/banPermission/", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data;
+}
+
+export async function promoteUser() {
+  const token = getAuthToken();
+  const res = await client.patch(
+    "/api/votes/promote/",
+    {},
+    { headers: { Authorization: `Bearer ${token}` } },
+  );
+  return res.data;
+}
+
+export async function banUser(userData) {
+  const token = getAuthToken();
+  const res = await client.patch("/api/votes/ban/", userData, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return res.data;
