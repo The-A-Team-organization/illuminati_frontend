@@ -110,7 +110,10 @@ export async function getHallOfFame() {
 }
 
 export async function sendHallOfFameMessage(architect_id, message) {
-  const res = await client.post("/api/hall_of_fame/send", { architect_id, message });
+  const res = await client.post("/api/hall_of_fame/send", {
+    architect_id,
+    message,
+  });
   return res.data;
 }
 
