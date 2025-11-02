@@ -29,7 +29,9 @@ export default function HallOfFame() {
       setMessage("");
       setSelected("");
     } catch (e) {
+      console.error("Failed to send message", e);
       setStatus("error");
+      alert("An error occurred while sending your message. Please try again.");
     }
   };
 
