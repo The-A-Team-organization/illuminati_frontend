@@ -106,6 +106,11 @@ export async function sendInvite(email, token) {
   const res = await client.post(
     "/api/users/invite/",
     { email },
+    { headers: { Authorization: `Bearer ${token}` } },
+  );
+  return res.data;
+}
+
 
 export async function checkPromotePermission() {
   const token = getAuthToken();
