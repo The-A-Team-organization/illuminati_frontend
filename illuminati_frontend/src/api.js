@@ -102,6 +102,19 @@ export async function sendVote(token, vote) {
   return res.data;
 }
 
+export async function getHallOfFame() {
+  const res = await client.get("/api/hall_of_fame/");
+  return res.data;
+}
+
+export async function sendHallOfFameMessage(architect_id, message) {
+  const res = await client.post("/api/hall_of_fame/send", {
+    architect_id,
+    message,
+  });
+  return res.data;
+}
+
 export async function sendInvite(email, token) {
   const res = await client.post(
     "/api/users/invite/",

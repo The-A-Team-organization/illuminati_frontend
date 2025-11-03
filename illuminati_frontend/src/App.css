@@ -447,3 +447,31 @@ body {
   color: #1c1c1c;
   border-color: var(--accent);
 }
+
+.form-select {
+  background: #1f1f1f;
+  border: 1px solid var(--accent);
+  color: #f5f5f5;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  appearance: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 6px rgba(212, 175, 55, 0.5);
+  background: #252525;
+}
+
+.form-select option {
+  background-color: #1c1c1c;
+  color: #f5f5f5;
+}
+
+.form-select:hover {
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+}
