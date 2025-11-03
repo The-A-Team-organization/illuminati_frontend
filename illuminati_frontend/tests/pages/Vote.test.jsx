@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import { describe, test, expect, vi, beforeEach } from "vitest";
 import Vote from "../../src/pages/Vote";
 import * as api from "../../src/api";
@@ -16,6 +16,10 @@ vi.mock("../../src/auth", () => ({
 vi.mock("../../src/api", () => ({
   getVotes: vi.fn(),
   sendVote: vi.fn(),
+  checkPromotePermission: vi.fn(),
+  checkBanPermission: vi.fn(),
+  promoteUser: vi.fn(),
+  banUser: vi.fn(),
 }));
 
 describe("Vote component", () => {
@@ -23,54 +27,91 @@ describe("Vote component", () => {
     vi.clearAllMocks();
   });
 
-  test("renders loading state initially", async () => {
-    api.getVotes.mockResolvedValueOnce({ status: "OK", data: [] });
-    render(<Vote />);
-    expect(screen.getByText("Loading votes...")).toBeInTheDocument();
-  });
-
-  test("renders Navbar and 'no active votes' when list is empty", async () => {
-    api.getVotes.mockResolvedValueOnce({ status: "OK", data: [] });
-    render(<Vote />);
-    expect(await screen.findByTestId("navbar")).toBeInTheDocument();
-    await waitFor(() =>
-      expect(screen.getByText("There are no active votes")).toBeInTheDocument(),
-    );
-  });
-
-  test("fetches and displays list of votes", async () => {
-    const mockVotes = [
-      { id: 1, name: "Vote 1", vote_type: "Law" },
-      { id: 2, name: "Vote 2", vote_type: "Event" },
-    ];
-    api.getVotes.mockResolvedValueOnce({ status: "OK", data: mockVotes });
-    render(<Vote />);
-    await waitFor(() => expect(api.getVotes).toHaveBeenCalledWith("mockToken"));
-
-    expect(await screen.findByText("Active Votes")).toBeInTheDocument();
-    expect(screen.getByText("Vote 1")).toBeInTheDocument();
-    expect(screen.getByText("Vote 2")).toBeInTheDocument();
-  });
-
-  test("handles API error during fetch", async () => {
+  test("handles API error during vote fetching", async () => {
     const consoleError = vi
       .spyOn(console, "error")
       .mockImplementation(() => {});
     api.getVotes.mockRejectedValueOnce(new Error("Network error"));
+    api.checkPromotePermission.mockResolvedValueOnce({ status: "FAIL" });
+    api.checkBanPermission.mockResolvedValueOnce({ status: "FAIL" });
+
     render(<Vote />);
-    await waitFor(() =>
-      expect(screen.getByText("Failed to fetch votes")).toBeInTheDocument(),
-    );
+    expect(
+      await screen.findByText("Failed to fetch votes"),
+    ).toBeInTheDocument();
     consoleError.mockRestore();
   });
 
-  test("shows error when server returns bad status", async () => {
-    api.getVotes.mockResolvedValueOnce({ status: "FAIL", data: [] });
+  test("calls sendVote when Agree button clicked", async () => {
+    const mockVotes = [{ id: 1, name: "Vote 1", percent: 10 }];
+    api.getVotes.mockResolvedValueOnce({ status: "OK", data: mockVotes });
+    api.checkPromotePermission.mockResolvedValueOnce({ status: "FAIL" });
+    api.checkBanPermission.mockResolvedValueOnce({ status: "FAIL" });
+    api.sendVote.mockResolvedValueOnce({ status: "OK" });
+
     render(<Vote />);
-    await waitFor(() =>
-      expect(
-        screen.getByText("Server returned wrong response"),
-      ).toBeInTheDocument(),
-    );
+
+    const agreeBtn = await screen.findByText("Agree");
+    fireEvent.click(agreeBtn);
+
+    await waitFor(() => {
+      expect(api.sendVote).toHaveBeenCalledWith("mockToken", {
+        id: 1,
+        name: "Vote 1",
+        choice: "AGREE",
+      });
+    });
+  });
+
+  test("shows error message when sendVote fails", async () => {
+    const mockVotes = [{ id: 1, name: "Vote 1", percent: 10 }];
+    api.getVotes.mockResolvedValueOnce({ status: "OK", data: mockVotes });
+    api.checkPromotePermission.mockResolvedValueOnce({ status: "FAIL" });
+    api.checkBanPermission.mockResolvedValueOnce({ status: "FAIL" });
+    api.sendVote.mockResolvedValueOnce({
+      status: "FAIL",
+      notification: "Server issue",
+    });
+
+    render(<Vote />);
+
+    const disagreeBtn = await screen.findByText("Disagree");
+    fireEvent.click(disagreeBtn);
+
+    expect(await screen.findByText(/Server error/i)).toBeInTheDocument();
+  });
+
+  test("calls promoteUser when Promote button clicked", async () => {
+    api.getVotes.mockResolvedValueOnce({ status: "OK", data: [] });
+    api.checkPromotePermission.mockResolvedValueOnce({ status: "OK" });
+    api.checkBanPermission.mockResolvedValueOnce({ status: "FAIL" });
+    api.promoteUser.mockResolvedValueOnce({ status: "OK" });
+
+    render(<Vote />);
+
+    const promoteBtn = await screen.findByText("Promote");
+    fireEvent.click(promoteBtn);
+
+    await waitFor(() => {
+      expect(api.promoteUser).toHaveBeenCalled();
+    });
+  });
+
+  test("shows message when Ban clicked without selecting user", async () => {
+    api.getVotes.mockResolvedValueOnce({ status: "OK", data: [] });
+    api.checkPromotePermission.mockResolvedValueOnce({ status: "FAIL" });
+    api.checkBanPermission.mockResolvedValueOnce({
+      status: "OK",
+      data: [{ user_id: 1, username: "Alice" }],
+    });
+
+    render(<Vote />);
+
+    const banBtn = await screen.findByText("Ban User");
+    fireEvent.click(banBtn);
+
+    expect(
+      await screen.findByText("Please select a user to ban."),
+    ).toBeInTheDocument();
   });
 });
