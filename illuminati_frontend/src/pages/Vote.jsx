@@ -235,8 +235,9 @@ export default function Vote() {
 
           {hasBanPermission && (
             <div style={{ marginBottom: "20px" }}>
-              <label>Select user to ban:</label>
+              <label htmlFor="ban-user">Select user to ban:</label>
               <select
+                id="ban-user"
                 onChange={(e) => {
                   const user = banUsers.find(
                     (u) => u.user_id === Number(e.target.value),

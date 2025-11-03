@@ -111,6 +111,18 @@ export async function sendHallOfFameMessage(architect_id, message) {
   const res = await client.post("/api/hall_of_fame/send", {
     architect_id,
     message,
+  });
+  return res.data;
+}
+
+export async function sendInvite(email, token) {
+  const res = await client.post(
+    "/api/users/invite/",
+    { email },
+    { headers: { Authorization: `Bearer ${token}` } },
+  );
+  return res.data;
+}
 
 export async function checkPromotePermission() {
   const token = getAuthToken();

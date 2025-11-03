@@ -10,6 +10,7 @@ import RecordsBackupRestore from "./pages/RecordsBackupRestore";
 import { isEntryVerified } from "./auth";
 import Vote from "./pages/Vote";
 import HallOfFame from "./pages/HallOfFame.jsx";
+import Invite from "./pages/Invite";
 
 export default function App() {
   return (
@@ -60,6 +61,15 @@ export default function App() {
           element={
             <ProtectedAuth>
               <HallOfFame />
+            </ProtectedAuth>
+          }
+        />
+
+        <Route
+          path="/invite"
+          element={
+            <ProtectedAuth>
+              <Invite />
             </ProtectedAuth>
           }
         />
