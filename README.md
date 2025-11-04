@@ -19,6 +19,7 @@ The interactive map relies on React Leaflet, and user authentication uses JWT to
 The application runs in a Dockerized environment using docker-compose for container orchestration.
 
 ## Main Pages
+
 - /entry → EntryPassword — Entry password screen for system access.
 
 - /login / /register → Login, Register — User authentication and registration pages.
@@ -34,12 +35,13 @@ The application runs in a Dockerized environment using docker-compose for contai
 - /invite → Invite — Email-based user invitation system.
 
 ## Role System
+
 Users have four access levels:
 
 - Architect: Highest rank. Can manage records, invite new members, vote and try to communicate with retired architects.
 - GoldenMason: Extended privileges. Can manage records, invite new members, vote.
 - SilverMason: Can create and view records, vote.
-- Mason (Regular):	Basic viewing and participation in votes.
+- Mason (Regular): Basic viewing and participation in votes.
 
 ## Interactive Map
 
@@ -73,22 +75,22 @@ The RecordsBackupRestore component provides:
 
 Main backend endpoints used by the frontend:
 
-- /api/authentific/entry/     → Entry password validation
-- /api/authentific/login/     → User login
-- /api/authentific/register/  → User registration
-- /api/records/all            → Retrieve all records
-- /api/records/create         → Create new record
-- /api/records/{id}           → Record details
-- /api/votes/...              → Voting system
-- /api/hall_of_fame/...       → Hall of Fame
-- /api/users/invite/          → User invitation
+- /api/authentific/entry/ → Entry password validation
+- /api/authentific/login/ → User login
+- /api/authentific/register/ → User registration
+- /api/records/all → Retrieve all records
+- /api/records/create → Create new record
+- /api/records/{id} → Record details
+- /api/votes/... → Voting system
+- /api/hall_of_fame/... → Hall of Fame
+- /api/users/invite/ → User invitation
 
 ## Infrastructure Context
 
 Illuminati Frontend is part of a multi-service ecosystem managed with Terraform.
 
-- [illuminati_backend](https://github.com/The-A-Team-organization/illuminati_backend)	→ REST API & business logic (Python)
-- [illuminati_email_service](https://github.com/The-A-Team-organization/illuminati_email_service)	→ Email delivery and password reset microservice (Go)
-- [illuminati_scheduler_service](https://github.com/The-A-Team-organization/illuminati_scheduler_service)	→ Scheduled automation service (Go)
+- [illuminati_backend](https://github.com/The-A-Team-organization/illuminati_backend) → REST API & business logic (Python)
+- [illuminati_email_service](https://github.com/The-A-Team-organization/illuminati_email_service) → Email delivery and password reset microservice (Go)
+- [illuminati_scheduler_service](https://github.com/The-A-Team-organization/illuminati_scheduler_service) → Scheduled automation service (Go)
 - [illuminati_iac](https://github.com/The-A-Team-organization/illuminati_iac) → Infrastructure (Terraform, Docker)
-- [illuminati_frontend](https://github.com/The-A-Team-organization/illuminati_frontend)(This repository)  →	 the user interface (React)
+- [illuminati_frontend](https://github.com/The-A-Team-organization/illuminati_frontend)(This repository) → the user interface (React)
