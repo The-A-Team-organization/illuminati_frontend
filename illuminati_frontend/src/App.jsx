@@ -11,6 +11,7 @@ import { isEntryVerified } from "./auth";
 import Vote from "./pages/Vote";
 import HallOfFame from "./pages/HallOfFame.jsx";
 import Invite from "./pages/Invite";
+import Broadcast from "./pages/Broadcast";
 
 export default function App() {
   return (
@@ -70,6 +71,15 @@ export default function App() {
           element={
             <ProtectedAuth>
               <Invite />
+            </ProtectedAuth>
+          }
+        />
+
+        <Route
+          path="/broadcast"
+          element={
+            <ProtectedAuth>
+              <Broadcast />
             </ProtectedAuth>
           }
         />
