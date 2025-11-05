@@ -10,7 +10,7 @@ export const navItems = [
     href: "/vote",
   },
   { name: "Invite", roles: ["GoldMason", "Architect"], href: "/invite" },
-  { name: "Broadcast Emails", roles: ["Architect"], href: "/broadcast" },
+  { name: "Broadcast", roles: ["Architect"], href: "/broadcast" },
   { name: "Hall of Fame", roles: ["Architect"], href: "/hall_of_fame" },
   { name: "Download/Upload", roles: ["Architect"], href: "/records" },
   {
