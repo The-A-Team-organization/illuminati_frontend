@@ -12,7 +12,7 @@ export default function Broadcast() {
 
   const handleTierToggle = (tier) => {
     setTiers((prev) =>
-      prev.includes(tier) ? prev.filter((t) => t !== tier) : [...prev, tier]
+      prev.includes(tier) ? prev.filter((t) => t !== tier) : [...prev, tier],
     );
   };
 
@@ -87,8 +87,9 @@ export default function Broadcast() {
 
         {status && (
           <p
-            className={`message ${status === "success" ? "text-accent" : "text-danger"
-              }`}
+            className={`message ${
+              status === "success" ? "text-accent" : "text-danger"
+            }`}
           >
             {message}
           </p>
@@ -97,5 +98,3 @@ export default function Broadcast() {
     </div>
   );
 }
-
-

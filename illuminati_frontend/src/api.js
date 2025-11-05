@@ -164,10 +164,9 @@ export async function sendBroadcast(data) {
   const res = await client.post(
     "/api/users/broadcast/",
     { tiers, topic, text },
-    { headers: { Authorization: `Bearer ${token}` } }
+    { headers: { Authorization: `Bearer ${token}` } },
   );
   return res.data;
 }
-
 
 export default client;
