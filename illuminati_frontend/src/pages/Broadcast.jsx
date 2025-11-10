@@ -31,6 +31,7 @@ export default function Broadcast() {
       setText("");
       setTiers([]);
     } catch (err) {
+      console.error("Broadcast failed:", err);
       setStatus("error");
       setMessage("Failed to send broadcast message. Please try again later.");
     }
@@ -87,9 +88,8 @@ export default function Broadcast() {
 
         {status && (
           <p
-            className={`message ${
-              status === "success" ? "text-accent" : "text-danger"
-            }`}
+            className={`message ${status === "success" ? "text-accent" : "text-danger"
+              }`}
           >
             {message}
           </p>
