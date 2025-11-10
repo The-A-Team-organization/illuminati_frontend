@@ -88,8 +88,9 @@ export default function Broadcast() {
 
         {status && (
           <p
-            className={`message ${status === "success" ? "text-accent" : "text-danger"
-              }`}
+            className={`message ${
+              status === "success" ? "text-accent" : "text-danger"
+            }`}
           >
             {message}
           </p>
