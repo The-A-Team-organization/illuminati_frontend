@@ -158,4 +158,15 @@ export async function banUser(userData) {
   return res.data;
 }
 
+export async function sendBroadcast(data) {
+  const token = getAuthToken();
+  const { tiers, topic, text } = data;
+  const res = await client.post(
+    "/api/users/broadcast/",
+    { tiers, topic, text },
+    { headers: { Authorization: `Bearer ${token}` } },
+  );
+  return res.data;
+}
+
 export default client;
