@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  generation: 1
+  labels:
+    run: frontend
+    name: frontend
+  namespace: illuminati
+spec:
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      run: frontend
+  strategy:
+    rollingUpdate:
+      maxSurge: {{.Values.maxSurge}}
+      maxUnavailable: {{.Values.maxUnavailable}}
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        run: frontend
+        version: "1"
+      name: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: {{.Values.containerRepo}}:{{.Values.buildVersion}}
+        resources:
+          requests:
+            cpu: {{.Values.cpuRequests | quote}}
+            memory:  {{.Values.memoryRequests | quote}}
+          limits:
+            cpu: {{.Values.cpuLimit | quote}}
+            memory: {{.Values.memorylimit | quote}}
+        livenessProbe:
+          httpGet:
+            path: {{.Values.healthPath}}
+            port: {{.Values.containerPort}}
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 10
+          failureThreshold: 3
+        ports:
+          - containerPort: {{.Values.containerPort}}
+            name: http
+            protocol: TCP
+
+status: {}
