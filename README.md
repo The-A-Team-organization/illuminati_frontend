@@ -94,3 +94,4 @@ Illuminati Frontend is part of a multi-service ecosystem managed with Terraform.
 - [illuminati_scheduler_service](https://github.com/The-A-Team-organization/illuminati_scheduler_service) → Scheduled automation service (Go)
 - [illuminati_iac](https://github.com/The-A-Team-organization/illuminati_iac) → Infrastructure (Terraform, Docker)
 - [illuminati_frontend](https://github.com/The-A-Team-organization/illuminati_frontend)(This repository) → the user interface (React)
+
