@@ -1,0 +1,15 @@
+maxSurge:       25%
+maxUnavailable: 25%
+containerRepo: 506087227011.dkr.ecr.eu-central-1.amazonaws.com/frontend_dev
+buildVersion: 1.0.27
+cpuRequests: 100m
+memoryRequests: 128Mi
+cpuLimit: 200m
+memorylimit: 256Mi
+healthPath: /
+containerPort: 80
+minReplicas: 1
+maxReplicas: 20
+cpuAverageUtilization: 70
+memoryAverageUtilization: 70
+dnsZones: door-store-moldova.pp.ua
